@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
+//Teste
+
 public class DateUtilsTest {
 	
 	@Test
