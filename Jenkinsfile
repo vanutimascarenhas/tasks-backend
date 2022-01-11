@@ -26,5 +26,6 @@ pipeline {
                 timeout(time: 1, unit: 'MINUTES')
                 waitForQualityGate abortPipeline: true, credentialsId: 'SonarToken'
             }
-    }
+        }
+    }   
 }
