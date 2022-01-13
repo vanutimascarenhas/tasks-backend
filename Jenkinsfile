@@ -12,6 +12,7 @@ pipeline {
                 script {
                     def exitCode = sh script: 'cat trufflehog | grep -q branchs ; echo $?', returnStatus: true
                     boolean existeSecrets = exitCode == 0
+                    println exitCode
                     println existeSecrets
                     if (existeSecrets) {
                         currentBuild.result = 'ABORTED'
