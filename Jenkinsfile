@@ -12,14 +12,12 @@ pipeline {
                 script {
                     def exitCode = sh script: 'cat trufflehog | grep -q branch ; echo $?', returnStatus: true
                     boolean existeSecrets = exitCode == 0
-                    println exitCode
-                    println existeSecrets
                     if (existeSecrets) {
-                        currentBuild.result = 'ABORTED'
-                        error('echo Secrets identificadas no codigo-fonte')
+                        //currentBuild.result = 'ABORTED'
+                        //error('Secrets identificadas no codigo-fonte')
+                        sh 'echo Secrets identificadas no codigo-fonte'
                     }
                 }
-                
             }
         }
         stage ('Build Backend') {
