@@ -11,7 +11,7 @@ pipeline {
                 sh 'cat trufflehog'
                 script {
                     def exitCode = sh script: 'cat trufflehog | grep -q branch ; echo $?', returnStatus: true
-                    boolean exists = exitCode == 0
+                    boolean existeSecrets = exitCode == 1
                 }
                 
             }
