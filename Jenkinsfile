@@ -10,7 +10,7 @@ pipeline {
                 sh 'docker run --rm dxa4481/trufflehog --json https://github.com/vanutimascarenhas/tasks-functional-tests.git | tee trufflehog'
                 sh 'cat trufflehog'
                 script {
-                    def exitCode = sh script: 'cat trufflehog | grep -q branch ; echo $?', returnStatus: true
+                    def exitCode = sh script: 'cat trufflehog | grep -q branchs ; echo $?', returnStatus: true
                     boolean existeSecrets = exitCode == 0
                     println existeSecrets
                     if (existeSecrets) {
@@ -23,7 +23,7 @@ pipeline {
         }
         stage ('Build Backend') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh 'mvn cleans packages -DskipTests'
             }
         }
         stage ('Unit Test') {
