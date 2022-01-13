@@ -30,10 +30,9 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage ('OWASP Dependency-Check Vulnerabilities') {
+        stage ('SCA') {
             steps {
                 sh 'mvn org.owasp:dependency-check-maven:check -Dformats=XML,JSON,HTML'
-                dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
             }
         }
         stage ('Sonar Analysis') {
