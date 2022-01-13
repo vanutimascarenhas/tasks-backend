@@ -22,7 +22,7 @@ pipeline {
         }
         stage ('Build Backend') {
             steps {
-                sh 'mvn cleans packages -DskipTests'
+                sh 'mvn clean package -DskipTests'
             }
         }
         stage ('Unit Test') {
