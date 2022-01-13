@@ -32,7 +32,7 @@ pipeline {
         }
         stage ('SCA') {
             steps {
-                sh 'mvn org.owasp:dependency-check-maven:check -Dformats=XML,JSON,HTML'
+                sh 'mvn org.owasp:dependency-check-maven:check -Dformats=XML,JSON,HTML -DdisableRetireJS'
             }
         }
         stage ('Sonar Analysis') {
