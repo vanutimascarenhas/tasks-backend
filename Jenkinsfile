@@ -11,7 +11,11 @@ pipeline {
                 sh 'cat trufflehog'
                 script {
                     def exitCode = sh script: 'cat trufflehog | grep -q branch ; echo $?', returnStatus: true
-                    boolean existeSecrets = exitCode == 1
+                    boolean existeSecrets = exitCode == 0
+                    if (existeSecrets) {
+                        currentBuild.result = 'ABORTED'
+                        error('echo Secrets identificadas no codigo-fonte')
+                    }
                 }
                 
             }
