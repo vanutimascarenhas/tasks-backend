@@ -42,6 +42,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('SONAR_LOCAL') {
                     sh "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=DeployBack -Dsonar.host.url=http://192.168.72.130:9000 -Dsonar.login=564d57baabda2404bb56ba49f549b3a9a6af0fdb -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/src/test/**,**/model/**,**Application.java -Dsonar.dependencyCheck.jsonReportPath=target/dependency-check-report.json -Dsonar.dependencyCheck.xmlReportPath=target/dependency-check-report.xml -Dsonar.dependencyCheck.htmlReportPath=target/dependency-check-report.html -Dsonar.dependencyCheck.severity.blocker=9.0 -Dsonar.dependencyCheck.severity.critical=7.0 -Dsonar.dependencyCheck.severity.major=4.0 -Dsonar.dependencyCheck.severity.minor=0.0 -Dsonar.dependencyCheck.summarize=true"
+                    dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
                 }
             }
         }
