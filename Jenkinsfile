@@ -9,10 +9,10 @@ pipeline {
                 sh 'docker run --rm dxa4481/trufflehog --json https://github.com/vanutimascarenhas/tasks-api-test.git | tee trufflehog'
                 sh 'docker run --rm dxa4481/trufflehog --json https://github.com/vanutimascarenhas/tasks-functional-tests.git | tee trufflehog'
                 sh 'cat trufflehog'
-                //script {
-                //    def exitCode = sh script: 'cat trufflehog | grep -q branch ; echo $?', returnStatus: true
-                //    boolean exists = exitCode == 1
-                //}
+                script {
+                    def exitCode = sh script: 'cat trufflehog | grep -q branch ; echo $?', returnStatus: true
+                    boolean exists = exitCode == 0
+                }
                 
             }
         }
