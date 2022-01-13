@@ -1,6 +1,18 @@
 pipeline {
     agent any
     stages {
+        stage ('Check-Git-Secrets') {
+            steps {
+                sh 'docker run --rm dxa4481/trufflehog --json https://github.com/vanutimascarenhas/tasks-backend.git >> trufflehog'
+                sh 'docker run --rm dxa4481/trufflehog --json https://github.com/vanutimascarenhas/tasks-frontend.git >> trufflehog'
+                sh 'docker run --rm dxa4481/trufflehog --json https://github.com/vanutimascarenhas/tasks-api-test.git >> trufflehog'
+                sh 'docker run --rm dxa4481/trufflehog --json https://github.com/vanutimascarenhas/tasks-functional-tests.git >> trufflehog'
+                sh 'rm -f trufflehog'
+                sh 'cat trufflehog' 
+                def exitCode = sh script: 'cat trufflehog | grep -q Reason ; echo $?', returnStatus: true
+                boolean exists = exitCode == 0
+            }
+        }
         stage ('Build Backend') {
             steps {
                 sh 'mvn clean package -DskipTests'
