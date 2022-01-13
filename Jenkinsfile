@@ -3,11 +3,11 @@ pipeline {
     stages {
         stage ('Check-Git-Secrets') {
             steps {
+                sh 'rm -f trufflehog'
                 sh 'docker run --rm dxa4481/trufflehog --json https://github.com/vanutimascarenhas/tasks-backend.git >> trufflehog'
                 sh 'docker run --rm dxa4481/trufflehog --json https://github.com/vanutimascarenhas/tasks-frontend.git >> trufflehog'
                 sh 'docker run --rm dxa4481/trufflehog --json https://github.com/vanutimascarenhas/tasks-api-test.git >> trufflehog'
                 sh 'docker run --rm dxa4481/trufflehog --json https://github.com/vanutimascarenhas/tasks-functional-tests.git >> trufflehog'
-                sh 'rm -f trufflehog'
                 sh 'cat trufflehog'
                 script {
                     def exitCode = sh script: 'cat trufflehog | grep -q Reason ; echo $?', returnStatus: true
