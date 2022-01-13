@@ -30,13 +30,18 @@ pipeline {
                 sh 'mvn test'
             }
         }
+        stage ('OWASP Dependency-Check Vulnerabilities') {
+            steps {
+                sh 'mvn org.owasp:dependency-check-maven:check -Dformats=XML,CSV,HTML'
+            }
+        }
         stage ('Sonar Analysis') {
             environment {
                 scannerHome = tool 'SONAR_SCANNER'
             }
             steps {
                 withSonarQubeEnv('SONAR_LOCAL') {
-                    sh "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=DeployBack -Dsonar.host.url=http://192.168.72.130:9000 -Dsonar.login=564d57baabda2404bb56ba49f549b3a9a6af0fdb -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/src/test/**,**/model/**,**Application.java"
+                    sh "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=DeployBack -Dsonar.host.url=http://192.168.72.130:9000 -Dsonar.login=564d57baabda2404bb56ba49f549b3a9a6af0fdb -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/src/test/**,**/model/**,**Application.java -Dsonar.dependencyCheck.jsonReportPath=target/dependency-check-report.json -Dsonar.dependencyCheck.xmlReportPath=target/dependency-check-report.xml -Dsonar.dependencyCheck.htmlReportPath=target/dependency-check-report.html"
                 }
             }
         }
