@@ -32,7 +32,8 @@ pipeline {
         }
         stage ('OWASP Dependency-Check Vulnerabilities') {
             steps {
-                sh 'mvn org.owasp:dependency-check-maven:check -Dformats=XML,CSV,HTML'
+                sh 'mvn org.owasp:dependency-check-maven:check -Dformats=XML,JSON,HTML'
+                dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
             }
         }
         stage ('Sonar Analysis') {
